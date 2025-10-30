@@ -110,19 +110,19 @@ The app was deployed on an **Amazon EC2 Ubuntu instance** using the following st
 
 ## 📈 Results
 
-    Shows and movies grouped into 5 distinct clusters.
-    
-    Visualization shows meaningful grouping based on genre, rating, and description.
-    
-    App provides real-time similarity search and interactive plots.
+   Shows and movies grouped into 5 distinct clusters.
+  
+   Visualization shows meaningful grouping based on genre, rating, and description.
+  
+   App provides real-time similarity search and interactive plots.
 
 ## 🔍 Example Output
 
-    | Show Title      | Cluster | Similar Shows                        |
-    | --------------- | ------- | ------------------------------------ |
-    | Stranger Things | 3       | Dark, The OA, The Society            |
-    | Money Heist     | 2       | Breaking Bad, Narcos, Ozark          |
-    | The Crown       | 1       | The Queen, Victoria, The Royal House |
+   | Show Title      | Cluster | Similar Shows                        |
+   | --------------- | ------- | ------------------------------------ |
+   | Stranger Things | 3       | Dark, The OA, The Society            |
+   | Money Heist     | 2       | Breaking Bad, Narcos, Ozark          |
+   | The Crown       | 1       | The Queen, Victoria, The Royal House |
 
 ## 🔧 Installation (Run Locally)
 
@@ -167,4 +167,5 @@ K. Ramanath
 📧 kiniramnath21@gmail.com
 
 ## ⭐ If you found this project interesting, consider giving it a star!
+
 
