@@ -16,29 +16,31 @@ def load_data():
 df = load_data()
 
 # -----------------------------
-# Feature extraction for similarity
+# Cache vectorizer for reuse
 # -----------------------------
 @st.cache_data
-def compute_similarity(data):
-    vectorizer = CountVectorizer(stop_words='english')
-    matrix = vectorizer.fit_transform(data['listed_in'] + " " + data['description'])
-    similarity = cosine_similarity(matrix)
-    return similarity
+def get_vectorizer(data):
+    vectorizer = CountVectorizer(stop_words="english")
+    matrix = vectorizer.fit_transform(data["listed_in"] + " " + data["description"])
+    return vectorizer, matrix
 
-similarity = compute_similarity(df)
+vectorizer, matrix = get_vectorizer(df)
 
 # -----------------------------
-# Recommendation Function
+# Get Recommendations (Lazy Similarity)
 # -----------------------------
 def get_recommendations(title, n=5):
     title = title.lower()
-    matches = df[df['title'].str.lower().str.contains(title)]
+    matches = df[df["title"].str.lower().str.contains(title)]
     if matches.empty:
         return None
     idx = matches.index[0]
-    scores = list(enumerate(similarity[idx]))
-    scores = sorted(scores, key=lambda x: x[1], reverse=True)
-    top_indices = [i[0] for i in scores[1:n+1]]
+
+    # Compute similarity for that one item only
+    show_vector = matrix[idx]
+    similarity_scores = cosine_similarity(show_vector, matrix).flatten()
+
+    top_indices = similarity_scores.argsort()[-(n+1):][::-1][1:]
     return df.iloc[top_indices]
 
 # -----------------------------
@@ -47,7 +49,7 @@ def get_recommendations(title, n=5):
 st.set_page_config(page_title="StreamFlix Recommendations", layout="wide")
 
 # -----------------------------
-# Custom CSS (no glow, clean Netflix red)
+# Custom CSS
 # -----------------------------
 st.markdown("""
 <style>
@@ -80,38 +82,21 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # -----------------------------
-# Header Section (no glow animation)
+# Header Section
 # -----------------------------
-st.markdown(
-    """
-    <div style='text-align:center; margin-top:-40px;'>
-        <h1 style='
-            font-size:48px;
-            font-weight:bold;
-            color:#E50914;
-            display:inline-flex;
-            align-items:center;
-            justify-content:center;
-            gap:12px;
-        '>
-            🍿 StreamFlix Recommendations
-        </h1>
-        <p style='font-size:20px; color:#ddd; margin-top:12px;'>
-            Your personalized movie & TV show recommendations!
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown("""
+<div style='text-align:center; margin-top:-40px;'>
+    <h1 style='font-size:48px; font-weight:bold; color:#E50914;'>🍿 StreamFlix Recommendations</h1>
+    <p style='font-size:20px; color:#ddd;'>Your personalized movie & TV show recommendations!</p>
+</div>
+""", unsafe_allow_html=True)
 
-# Add spacing below title
 st.markdown("<div style='margin-top:30px;'></div>", unsafe_allow_html=True)
 
 # -----------------------------
 # Sidebar Filters
 # -----------------------------
 st.sidebar.title("Filters")
-
 type_filter = st.sidebar.selectbox("Type", ["All"] + sorted(df["type"].dropna().unique().tolist()))
 unique_genres = sorted(set(g.strip() for s in df["listed_in"].dropna() for g in s.split(",")))
 genre_filter = st.sidebar.multiselect("Genre(s)", unique_genres)
@@ -128,9 +113,10 @@ user_input = st.text_input("Enter show/movie name:")
 # Recommendation Display
 # -----------------------------
 if user_input:
-    recs = get_recommendations(user_input, n=10)
+    with st.spinner("Finding similar titles..."):
+        recs = get_recommendations(user_input, n=10)
+
     if recs is not None:
-        # Apply filters
         if type_filter != "All":
             recs = recs[recs["type"] == type_filter]
         if genre_filter:
@@ -143,25 +129,20 @@ if user_input:
             for _, row in recs.iterrows():
                 genres_html = " ".join([f"<span class='genre-pill'>{g.strip()}</span>" for g in str(row.get('listed_in', 'N/A')).split(",")])
                 search_url = f"https://www.google.com/search?q={row['title'].replace(' ', '+')}+Netflix"
-                st.markdown(
-                    f"""
-                    <a href='{search_url}' target='_blank' style='text-decoration:none;'>
-                        <div class='recommend-card'>
-                            <h3 style='color:#ff3333;'>{row['title']}</h3>
-                            <p style='color:#f5c518; font-size:14px;'>
-                                <strong>Type:</strong> {row['type']} |
-                                <strong>Year:</strong> {row.get('release_year', 'N/A')}
-                            </p>
-                            <p style='color:#ddd;'>
-                                <strong>Country:</strong> {row.get('country', 'Unknown')}
-                            </p>
-                            <div>{genres_html}</div>
-                            <p style='color:#bbb; margin-top:8px;'><em>{row['description']}</em></p>
-                        </div>
-                    </a>
-                    """,
-                    unsafe_allow_html=True
-                )
+                st.markdown(f"""
+                <a href='{search_url}' target='_blank' style='text-decoration:none;'>
+                    <div class='recommend-card'>
+                        <h3 style='color:#ff3333;'>{row['title']}</h3>
+                        <p style='color:#f5c518; font-size:14px;'>
+                            <strong>Type:</strong> {row['type']} |
+                            <strong>Year:</strong> {row.get('release_year', 'N/A')}
+                        </p>
+                        <p style='color:#ddd;'><strong>Country:</strong> {row.get('country', 'Unknown')}</p>
+                        <div>{genres_html}</div>
+                        <p style='color:#bbb; margin-top:8px;'><em>{row['description']}</em></p>
+                    </div>
+                </a>
+                """, unsafe_allow_html=True)
         else:
             st.warning("No matches found with selected filters.")
     else:
