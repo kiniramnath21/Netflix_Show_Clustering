@@ -2,13 +2,14 @@ import streamlit as st
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
+import os
 
 # -----------------------------
 # Load and preprocess dataset
 # -----------------------------
 @st.cache_data
 def load_data():
-    df = pd.read_csv(r"C:\Users\91636\Documents\Netflix_Show_Clustering\data\netflix_titles.csv")
+    df = pd.read_csv(os.path.join("data", "netflix_titles.csv"))
     df.dropna(subset=["title", "listed_in", "description"], inplace=True)
     return df
 
@@ -156,7 +157,7 @@ if user_input:
                             </p>
                             <div>{genres_html}</div>
                             <p style='color:#bbb; margin-top:8px;'><em>{row['description']}</em></p>
-                        </div>
+                        </div>w
                     </a>
                     """,
                     unsafe_allow_html=True
