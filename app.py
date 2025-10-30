@@ -157,7 +157,7 @@ if user_input:
                             </p>
                             <div>{genres_html}</div>
                             <p style='color:#bbb; margin-top:8px;'><em>{row['description']}</em></p>
-                        </div>w
+                        </div>
                     </a>
                     """,
                     unsafe_allow_html=True
