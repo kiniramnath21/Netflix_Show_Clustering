@@ -157,14 +157,18 @@ The app was deployed on an **Amazon EC2 Ubuntu instance** using the following st
 
 ## 👨‍💻 Author
 K. Ramanath
+
 💼 Software & Machine Learning Engineer
+
 📍 Bengaluru, India
+
 🔗 LinkedIn
 
 📧 kiniramnath21@gmail.com
 
 ## ⭐ If you found this project interesting, consider giving it a star!
     
+
 
 
 
