@@ -106,7 +106,7 @@ The app was deployed on an **Amazon EC2 Ubuntu instance** using the following st
 
 5. **Access Application**
 
-       Public URL: http://3.111.53.247:8501
+   Public URL: http://3.111.53.247:8501
 
 ## 📈 Results
 
@@ -157,12 +157,13 @@ The app was deployed on an **Amazon EC2 Ubuntu instance** using the following st
 
 ## 👨‍💻 Author
 
-    K. Ramanath
-    💼 Software & Machine Learning Engineer
-    📍 Bengaluru, India
-    🔗 LinkedIn
-    📧 kiniramnath21@gmail.com
+  K. Ramanath
+  💼 Software & Machine Learning Engineer
+  📍 Bengaluru, India
+  🔗 LinkedIn
+  📧 kiniramnath21@gmail.com
 
 ## ⭐ If you found this project interesting, consider giving it a star!
     
+
 
