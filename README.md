@@ -162,8 +162,9 @@ K. Ramanath
 
 📍 Bengaluru, India
 
-🔗 LinkedIn
+🔗 [LinkedIn](https://www.linkedin.com/in/k-ramanath/)
 
 📧 kiniramnath21@gmail.com
 
 ## ⭐ If you found this project interesting, consider giving it a star!
+
