@@ -167,15 +167,3 @@ K. Ramanath
 📧 kiniramnath21@gmail.com
 
 ## ⭐ If you found this project interesting, consider giving it a star!
-
-```yaml
----
-
-Would you like me to include a **badges section** (like “Python”, “AWS EC2”, “Streamlit”, etc.) at the top for better GitHub appearance? It makes the README look more polished and professional (e.g., colorful shields).
-
-    
-
-
-
-
-
