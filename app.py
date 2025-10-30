@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.feature_extraction.text import CountVectorizer
+from urllib.parse import quote_plus
 import os
 
 # -----------------------------
@@ -40,7 +41,7 @@ def get_recommendations(title, n=5):
     show_vector = matrix[idx]
     similarity_scores = cosine_similarity(show_vector, matrix).flatten()
 
-    top_indices = similarity_scores.argsort()[-(n+1):][::-1][1:]
+    top_indices = similarity_scores.argsort()[-(n + 1):][::-1][1:]
     return df.iloc[top_indices]
 
 # -----------------------------
@@ -117,6 +118,7 @@ if user_input:
         recs = get_recommendations(user_input, n=10)
 
     if recs is not None:
+        # Apply filters
         if type_filter != "All":
             recs = recs[recs["type"] == type_filter]
         if genre_filter:
@@ -127,19 +129,31 @@ if user_input:
         if not recs.empty:
             st.markdown("## Recommended Shows/Movies: 🔁")
             for _, row in recs.iterrows():
-                genres_html = " ".join([f"<span class='genre-pill'>{g.strip()}</span>" for g in str(row.get('listed_in', 'N/A')).split(",")])
-                search_url = f"https://www.google.com/search?q={row['title'].replace(' ', '+')}+Netflix"
+                title = row.get('title', 'Unknown Title')
+                type_ = row.get('type', 'Unknown')
+                year = row.get('release_year', 'N/A')
+                country = row.get('country', 'Unknown')
+                desc = row.get('description', 'No description available.')
+                genres_html = " ".join([
+                    f"<span class='genre-pill'>{g.strip()}</span>"
+                    for g in str(row.get('listed_in', 'N/A')).split(",")
+                ])
+
+                # Safe Google search link
+                search_query = quote_plus(f"{title} Netflix")
+                search_url = f"https://www.google.com/search?q={search_query}"
+
                 st.markdown(f"""
                 <a href='{search_url}' target='_blank' style='text-decoration:none;'>
                     <div class='recommend-card'>
-                        <h3 style='color:#ff3333;'>{row['title']}</h3>
+                        <h3 style='color:#ff3333;'>{title}</h3>
                         <p style='color:#f5c518; font-size:14px;'>
-                            <strong>Type:</strong> {row['type']} |
-                            <strong>Year:</strong> {row.get('release_year', 'N/A')}
+                            <strong>Type:</strong> {type_} |
+                            <strong>Year:</strong> {year}
                         </p>
-                        <p style='color:#ddd;'><strong>Country:</strong> {row.get('country', 'Unknown')}</p>
+                        <p style='color:#ddd;'><strong>Country:</strong> {country}</p>
                         <div>{genres_html}</div>
-                        <p style='color:#bbb; margin-top:8px;'><em>{row['description']}</em></p>
+                        <p style='color:#bbb; margin-top:8px;'><em>{desc}</em></p>
                     </div>
                 </a>
                 """, unsafe_allow_html=True)
