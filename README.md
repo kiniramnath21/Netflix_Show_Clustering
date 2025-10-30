@@ -143,7 +143,7 @@ The app was deployed on an **Amazon EC2 Ubuntu instance** using the following st
 
 5. **Access at:**
 
-       👉 http://localhost:8501
+   👉 http://localhost:8501
 
 ## 🚀 Future Enhancements
 
@@ -165,3 +165,4 @@ The app was deployed on an **Amazon EC2 Ubuntu instance** using the following st
 
 ## ⭐ If you found this project interesting, consider giving it a star!
     
+
