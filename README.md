@@ -1,4 +1,9 @@
-# 🎬 Netflix Show Clustering using Machine Learning
+# 🎬 Netflix Show Clustering & Recommendation System using Machine Learning
+
+[![Live Demo](https://img.shields.io/badge/Live_App-Streamlit-green?logo=streamlit)](https://netflixshowclustering.streamlit.app)
+[![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)]()
+[![Scikit-learn](https://img.shields.io/badge/ML-ScikitLearn-orange?logo=scikitlearn)]()
+[![Dataset](https://img.shields.io/badge/Dataset-Kaggle-blue?logo=kaggle)]()
 
 A data-driven unsupervised learning project that clusters Netflix shows and movies based on similarities in genre, cast, rating, and description.  
 This project demonstrates end-to-end **Machine Learning model development, visualization, and deployment** using AWS EC2 and Streamlit.
@@ -20,14 +25,26 @@ This project applies **K-Means Clustering** on the Netflix dataset to group show
 
 ---
 
+## 🎯 Project Impact
+
+This system demonstrates how unsupervised learning techniques like K-Means clustering combined with cosine similarity can power lightweight recommendation engines without requiring user interaction history.
+
+It showcases practical skills in:
+- NLP feature engineering
+- similarity-based recommendation systems
+- dimensionality reduction using PCA
+- interactive ML deployment using Streamlit
+
+---
+
 ## 🧩 Key Objectives
 
 - Clean and preprocess the Netflix dataset.
-- Perform feature extraction using **TF-IDF Vectorization** on textual descriptions.
+- Perform feature extraction using CountVectorizer on genre and description text.
 - Apply **K-Means Clustering** to categorize shows and movies.
 - Reduce dimensions with **PCA** for visual representation.
 - Build an interactive **Streamlit web application**.
-- Deploy the project using **AWS EC2** for public access.
+- Deploy the project using Streamlit Cloud for public access (initial prototype deployed on AWS EC2).
 
 ---
 
@@ -35,8 +52,8 @@ This project applies **K-Means Clustering** on the Netflix dataset to group show
 
 **Languages:** Python  
 **Libraries:** pandas, numpy, scikit-learn, matplotlib, seaborn, plotly, nltk  
-**Visualization & UI:** Streamlit, OxyPlot (for optional visualizations)  
-**Deployment:** AWS EC2, pipenv / venv, nohup  
+**Visualization & UI:** Streamlit, Plotly, Matplotlib, Seaborn 
+**Deployment:** Streamlit Cloud (primary), AWS EC2 (initial prototype)
 **Tools:** Jupyter Notebook, Visual Studio Code  
 
 ---
@@ -49,7 +66,7 @@ This project applies **K-Means Clustering** on the Netflix dataset to group show
 - **Cleaning Performed:**
   - Removal of null and duplicate records  
   - Text normalization (lowercasing, punctuation removal, lemmatization)  
-  - Tokenization and TF-IDF vectorization for description column  
+  - Tokenization and CountVectorizer-based feature extraction for description and genre columns  
 
 ---
 
@@ -79,6 +96,33 @@ This project applies **K-Means Clustering** on the Netflix dataset to group show
   - Search by show name  
   - Explore similar shows  
   - View 2D PCA visualization  
+
+---
+
+## 🏗 System Architecture
+
+User Input (Movie Title)
+        ↓
+Text Feature Extraction (CountVectorizer)
+        ↓
+Similarity Computation (Cosine Similarity)
+        ↓
+Cluster Mapping (K-Means)
+        ↓
+Recommended Shows Displayed via Streamlit UI
+
+---
+
+## ⚙️ Recommendation Pipeline
+
+The recommendation workflow follows these steps:
+
+1. User enters a movie or TV show title
+2. The system locates the closest matching title in dataset
+3. Text features (genre + description) are vectorized using CountVectorizer
+4. Cosine similarity is computed between the selected title and all other titles
+5. Top-N most similar titles are returned as recommendations
+6. Results are filtered using optional sidebar filters (genre, country, type)
 
 ---
 
@@ -149,7 +193,7 @@ The app was deployed on an **Amazon EC2 Ubuntu instance** using the following st
 
 ## 🚀 Future Enhancements
 
-- Integrate content recommendation system using cosine similarity.
+- Improve recommendation quality using transformer-based embeddings (Sentence-BERT / Hugging Face)
 
 - Add genre-based filtering and user ratings analysis.
 
