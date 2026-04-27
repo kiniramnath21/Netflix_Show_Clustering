@@ -87,8 +87,12 @@ st.markdown("""
 # -----------------------------
 st.markdown("""
 <div style='text-align:center; margin-top:-40px;'>
-    <h1 style='font-size:48px; font-weight:bold; color:#E50914;'>🍿 StreamFlix Recommendations</h1>
-    <p style='font-size:20px; color:#ddd;'>Your personalized movie & TV show recommendations!</p>
+    <h1 style='font-size:48px; font-weight:bold; color:#E50914;'>
+🍿 Netflix Show Clustering & Recommendation System
+</h1>
+<p style='font-size:20px; color:#ddd;'>
+K-Means clustering powered similarity-based movie & TV recommendations
+</p>
 </div>
 """, unsafe_allow_html=True)
 
