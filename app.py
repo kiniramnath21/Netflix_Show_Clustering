@@ -47,7 +47,7 @@ def get_recommendations(title, n=5):
 # -----------------------------
 # Streamlit Config
 # -----------------------------
-st.set_page_config(page_title="StreamFlix Recommendations", layout="wide")
+st.set_page_config(page_title="🍿 Netflix Show Clustering & Recommendation System", layout="wide")
 
 # -----------------------------
 # Custom CSS
