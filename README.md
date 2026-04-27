@@ -7,7 +7,9 @@ This project demonstrates end-to-end **Machine Learning model development, visua
 
 ## 🚀 Live Demo
 
-🔗 **Deployed on AWS EC2:** [Netflix Show Clustering App](http://3.111.53.247:8501)
+An interactive machine learning application that clusters Netflix shows using K-Means and recommends similar content based on feature similarity.
+
+🔗 Live Demo: https://netflixshowclustering.streamlit.app
 
 ---
 
